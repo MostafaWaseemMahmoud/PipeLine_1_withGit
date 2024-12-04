@@ -8,7 +8,8 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'mostafawaseem/social-media-app'
         DOCKER_TAG = 'latest'
-        DOCKER_USERNAME = 'mostafa-waseem' // استبدل باسم المستخدم الخاص بك في Docker Hub
+        DOCKER_USERNAME = 'mostafa-waseem'
+        PATH = "/mnt/c/Program Files/nodejs:$PATH"
     }
 
     stages {
