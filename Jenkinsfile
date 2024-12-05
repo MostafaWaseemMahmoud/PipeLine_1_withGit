@@ -2,70 +2,45 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS_20'
+        nodejs 'NodeJS_20' // Specify your Node.js toolchain name here
     }
 
     environment {
-        DOCKER_IMAGE = 'mostafawaseem/social-media-app'
-        DOCKER_TAG = 'latest'
-        DOCKER_USERNAME = 'mostafa-waseem' // استبدل باسم المستخدم الخاص بك في Docker Hub
+        PATH = "/mnt/c/Program Files/nodejs:PATH" // Add Node.js to PATH
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Check Out Code From Rep') {
             steps {
-                echo 'Cloning the repository...'
-                git branch: 'main', 
-                    url: 'https://github.com/MostafaWaseemMahmoud/Socail-Media-Application-F-End.git'
+                echo "Getting Repo"
+                git branch: 'main', url: "https://github.com/MostafaWaseemMahmoud/FaceBook-React"
             }
         }
-
-        stage('Install Dependencies') {
+        
+        stage('Install Dependensies') {
             steps {
-                echo 'Installing dependencies...'
+                echo "Install Dependensies"
                 sh 'npm install'
             }
         }
 
-        stage('Run Tests') {
+        stage('Testing The Code') {
             steps {
-                echo 'Running tests...' // أضف أوامر لاختبار الكود هنا إذا كانت لديك اختبارات
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker image...'
-                sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
-            }
-        }
-
-        stage('Push Docker Image to Repository') {
-            steps {
-                echo 'Pushing Docker image to the Docker registry...'
-                withCredentials([string(credentialsId: 'docker-hub-credentials', variable: 'DOCKER_PASSWORD')]) {
-                    sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                    sh 'docker push $DOCKER_IMAGE:$DOCKER_TAG'
-                }
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying the Docker container to production...'
-                // هنا يمكن استخدام Docker Compose أو kubectl (Kubernetes) لتشغيل الحاويات في بيئة الإنتاج
-                sh 'docker stop social-media-app || true && docker rm social-media-app || true'
-                sh 'docker run -d -p 80:3000 --name social-media-app $DOCKER_IMAGE:$DOCKER_TAG'
+                echo "Test Code"
+                echo "Testing"
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'PipeLine succeeded!'
         }
         failure {
-            echo 'Pipeline failed! Please check the logs.'
+            echo 'PipeLine failed!'
+        }
+        always {
+            echo '--> You Reach The End Of The PipeLine <--'
         }
     }
 }
