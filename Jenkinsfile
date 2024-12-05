@@ -6,9 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKER_IMAGE = 'mostafawaseem/social-media-app'
-        DOCKER_TAG = 'latest'
-        DOCKER_USERNAME = 'mostafa-waseem' // استبدل باسم المستخدم الخاص بك في Docker Hub
+        PATH = "/mnt/c/Program Files/nodejs:PATH" // Add Node.js to PATH
     }
 
     stages {
