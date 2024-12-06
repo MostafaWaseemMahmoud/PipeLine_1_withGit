@@ -13,7 +13,7 @@ pipeline {
         stage('Check Out Code From Rep') {
             steps {
                 echo "Getting Repo"
-                git branch: 'main', url: "https://github.com/MostafaWaseemMahmoud/FaceBook-React"
+                git branch: 'main', url: "https://github.com/MostafaWaseemMahmoud/Socail-Media-Application-F-End"
             }
         }
         
