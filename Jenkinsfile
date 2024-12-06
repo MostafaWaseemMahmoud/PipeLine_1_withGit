@@ -2,32 +2,38 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'NodeJS_20' // Specify your Node.js toolchain name here
+        nodejs 'NodeJS_20' // Ensure this matches the Node.js toolchain in Jenkins
     }
 
     environment {
-        PATH = "/mnt/c/Program Files/nodejs:PATH" // Add Node.js to PATH
+        PATH = "/usr/bin:/usr/local/bin:${env.PATH}" // Update to match your environment
     }
 
     stages {
         stage('Check Out Code From Rep') {
             steps {
                 echo "Getting Repo"
-                git branch: 'main', url: "https://github.com/MostafaWaseemMahmoud/Socail-Media-Application-F-End"
+                git branch: 'main', url: "https://github.com/MostafaWaseemMahmoud/FaceBook-React"
             }
         }
         
         stage('Install Dependensies') {
             steps {
-                echo "Install Dependensies"
-                sh 'npm install'
+                echo "Install Dependencies"
+                sh '''
+                    echo "Node Version:"
+                    node -v
+                    echo "NPM Version:"
+                    npm -v
+                    npm install
+                '''
             }
         }
 
         stage('Testing The Code') {
             steps {
                 echo "Test Code"
-                echo "Testing"
+                sh 'echo "Running Tests"'
             }
         }
     }
